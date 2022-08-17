@@ -6,7 +6,13 @@ app.get("/", function(req,res) {
 
   const url = "https://api.openweathermap.org/data/2.5/weather?lat=18.516726&lon=73.856255&appid=779ed2fa86a431065411d589ceae3c46"
   https.get(url, function(response) {
-    console.log(response);
+    console.log(response.statusCode);
+
+    response.on("data", function(data) {
+      var weatherData = JSON.parse(data);
+      console.log(weatherData.main.temp);
+      console.log(weatherData.weather[0].description)
+    });
   });
   res.send("Server is Up and running !")
 })
